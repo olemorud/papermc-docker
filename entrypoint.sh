@@ -11,10 +11,10 @@ memory_heuristic () {
 	local total_memory=$(free | awk  '/Mem:/{print $2}')
 
 	# Below 8 GB we assume this is running on a dedicated server, so we
-	# allocate all but 10mb of the RAM. Otherwise allocate 30%. This is not
-	# based on any profiling or testing
+	# allocate 75% of the RAM. Otherwise allocate 30%. This is not based on any
+	# profiling or testing
 	if [[ total_memory -lt 8388608 ]]; then
-		memory_heuristic_cache=$((total_memory - 10240))
+		memory_heuristic_cache=$((total_memory * 75/100))
 	else
 		memory_heuristic_cache=$((total_memory * 3/10))
 	fi
